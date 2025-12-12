@@ -1,0 +1,56 @@
+function permute(arr, idx, result) {
+    if (idx === arr.length) {
+        result.push([...arr]); 
+        return;
+    }
+
+    for (let i = idx; i < arr.length; i++) {
+        swap(arr, i, idx);
+        permute(arr, idx + 1, result);
+        swap(arr, i, idx); // backtrack
+    }
+}
+
+function swap(arr, i, j) {
+    const temp = arr[i];
+    arr[i] = arr[j];
+    arr[j] = temp;
+}
+
+function isCircle(arr) {
+    for (let i = 0; i < arr.length - 1; i++) {
+        const lastChar = arr[i].charAt(arr[i].length - 1);
+        const nextFirst = arr[i + 1].charAt(0);
+
+        if (lastChar !== nextFirst) {
+            return false;
+        }
+    }
+
+
+    const firstFirst = arr[0].charAt(0);
+    const lastLast = arr[arr.length - 1].charAt(arr[arr.length - 1].length - 1);
+
+    return firstFirst === lastLast;
+}
+
+function circleForm(arr) {
+    const result = [];
+    permute(arr, 0, result);
+
+    for (const perm of result) {
+        if (isCircle(perm)) {
+            console.log(perm);
+            return true;
+        }
+    }
+    return false;
+}
+
+const arr = ["chair", "height", "rocket", "touch", "tunic"];
+
+if (circleForm(arr)) {
+    console.log("True");
+} else {
+    console.log("False");
+}

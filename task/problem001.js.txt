@@ -1,0 +1,48 @@
+function largestRectangle(array) {
+    let maxArea = 0;
+    const rows = array.length;
+    const columns = array[0].length;
+
+    for (let row1 = 0; row1 < rows; row1++) {
+        for (let column1 = 0; column1 < columns; column1++) {
+
+            if (array[row1][column1] === 1) {
+
+                for (let row2 = row1; row2 < rows; row2++) {
+                    for (let column2 = column1; column2 < columns; column2++) {
+
+                        if (check(array, row1, row2, column1, column2)) {
+                            const area = (row2 - row1 + 1) * (column2 - column1 + 1);
+                            maxArea = Math.max(maxArea, area);
+                        }
+
+                    }
+                }
+
+            }
+        }
+    }
+
+    return maxArea;
+}
+
+function check(array, row1, row2, column1, column2) {
+    for (let r = row1; r <= row2; r++) {
+        for (let c = column1; c <= column2; c++) {
+            if (array[r][c] === 0) {
+                return false;
+            }
+        }
+    }
+    return true;
+}
+
+// Test
+const array = [
+    [1, 0, 0, 0],
+    [1, 0, 1, 1],
+    [1, 0, 1, 1],
+    [0, 1, 0, 0]
+];
+
+console.log(largestRectangle(array));
